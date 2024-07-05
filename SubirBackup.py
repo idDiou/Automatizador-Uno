@@ -7,7 +7,7 @@ import pyperclip
 
 
 #intervalo entre os comandos
-pa.PAUSE = 1
+pa.PAUSE = 1.5
 
 
 #Para poder interromper o código
@@ -21,9 +21,12 @@ def monitorar_interrupcao():
 #função principal/inicial
 def main():
     global MAC
+    global MACgrande
+    global MACpequeno
     print('-----Bem Vindo ao Automatizador VPU-----')
     MAC = input('por gentileza digite o mac: ')
-    print('o mac é:', MAC)
+    MACgrande = MAC.upper()
+    MACpequeno = MAC.lower()
     verificar()
 
 #Verificação
@@ -77,6 +80,7 @@ def RoteadorF():
     pa.press('enter')
     novo()
 
+#Acessa o roteador caso seja da rua
 def RoteadorRua():
     if interromper:
         return
@@ -106,21 +110,21 @@ def gerenciamento():
     pa.press('tab', 9)
     pa.press('enter')
     pa.press('F11')
-    pa.click(x=1831, y=181)
+    pa.click(x=977, y=146)
     pa.mouseDown(button='left')
     time.sleep(1)
     pa.mouseUp(button='left')
-    pa.click(x=1646, y=186)
+    pa.click(x=859, y=149)
     backup()
 
 #acessa o backup
 def backup():
     if interromper:
         return
-    pa.click(x=1069, y=522)
+    pa.click(x=392, y=430)
     pa.press('tab')
     pa.press('enter')
-    pa.write('C:\\Users\\nocvp\\OneDrive\Documentos\\Vem-pra-Uno-ZTE-H199A-main')
+    pa.write('C:\\Users\\noc autum\\Documents\\Vem-pra-Uno-ZTE-H199A-main')
     pa.press('enter')
     pa.write('default.bin')
     pa.press('enter')
@@ -134,58 +138,85 @@ def Cbackup():
     pa.press('enter')
     pa.press('tab')
     pa.press('enter')
-    time.sleep(70)
+    time.sleep(60)
+    fecharjanela()
+
+#Fecha a janela para impedir o bug de login do H199A
+def fecharjanela():
+    if interromper:
+        return
+    pa.keyDown('alt')
+    pa.press('f4')
+    pa.keyUp('alt')
+    Acesso()
     logar()
     
+#Para poder logar no roteador pós backup
 def logar():
     if interromper:
         return
+    pa.write('192.168.1.1')
+    pa.press('enter')
+    pa.sleep(10)
+    pa.press('f11')
+    pa.press('f5')
     pa.write('multipro')
     pa.press('tab')
     pa.write('Vpu@2018')
+    pa.press('tab')
     pa.press('enter')
-    pa.press('tab', 5)
-    pa.press('enter')
+    removassistente()
+
+def removassistente():
+    pa.click(x=308, y=518)
     wan()
 
 #acessa a Wan e altera o ppoe
 def wan():
     if interromper:
         return
-    pa.press('tab', 3)
+    pa.press('tab', 4)
     pa.press('enter')
-    pa.press('tab', 7)
+    pa.press('tab', 7, 1)
     pa.press('enter')
-    pa.click(x=1022, y=388)
+    pa.click(x=307, y=328)
     pa.press('tab', 6)
-    pa.write(MAC[-6:] + '@vemprauno')
+    pa.write(MACgrande[-6:] + '@vemprauno')
+    pa.press('tab', 11, 0.5)
+    pa.press('enter')
     lan()
 
 #acessa o wifi e senha
 def lan():
     if interromper:
         return
-    pa.press('tab', 11)
-    pa.press('enter')
     time.sleep(1)
-    pa.press('tab', 7, 1)
-    pa.press('enter')
+    pa.press('home')
+    pa.click(x=695, y=90)
     pa.press('tab', 7)
     pa.press('enter')
-    pa.click(x=1115, y=652)
+    pa.click(x=348, y=551)
     pa.press('tab', 3)
     g4()
 
 #usuario e senha do 4g
 def g4():
-    pa.write('VempraUno_' + MAC[-4:])
-    pa.press
+    pa.write('VempraUno_' + MACgrande[-4:])
     pa.press('tab', 3)
-    pa.write(MAC[-8:])
+    pa.write(MACpequeno[-8:])
     pa.press('tab', 4)
     pa.press('enter')
     pa.press('tab')
     pa.press('enter')
+    relatorio()
+
+def relatorio():
+    os.system('cls')
+    print ('o ppoe é: ' + MACgrande[-6:] + '@vemprauno')
+    print ('o usuario é: VempraUno_' + MACgrande[-4:])
+    print ('a senha é: ' + MACpequeno[-8:])
+    time.sleep (60)
+    
 
 if __name__ == "__main__":
     # Inicia o monitoramento da tecla de interrupção em uma thread separada
