@@ -7,7 +7,7 @@ import pyperclip
 
 
 #intervalo entre os comandos
-pa.PAUSE = 1.5
+pa.PAUSE = 1
 
 
 #Para poder interromper o código
@@ -105,7 +105,7 @@ def gerenciamento():
     if interromper:
         return
     pa.press('enter')
-    pa.press('tab', 5)
+    pa.press('tab', 5,)
     pa.press('enter')
     pa.press('tab', 9)
     pa.press('enter')
@@ -121,7 +121,7 @@ def gerenciamento():
 def backup():
     if interromper:
         return
-    pa.click(x=392, y=430)
+    pa.click(x=333, y=460)
     pa.press('tab')
     pa.press('enter')
     pa.write('C:\\Users\\noc autum\\Documents\\Vem-pra-Uno-ZTE-H199A-main')
@@ -168,18 +168,19 @@ def logar():
     removassistente()
 
 def removassistente():
-    pa.click(x=308, y=518)
-    wan()
+    pa.press('tab', 6)
+    pa.press('enter')
+    wlan()
 
-#acessa a Wan e altera o ppoe
-def wan():
+#acessa a Wlan e altera o ppoe
+def wlan():
     if interromper:
         return
-    pa.press('tab', 4)
+    pa.press('tab', 3)
     pa.press('enter')
     pa.press('tab', 7, 1)
     pa.press('enter')
-    pa.click(x=307, y=328)
+    pa.click(x=343, y=333)
     pa.press('tab', 6)
     pa.write(MACgrande[-6:] + '@vemprauno')
     pa.press('tab', 11, 0.5)
