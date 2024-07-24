@@ -18,6 +18,11 @@ def monitorar_interrupcao():
     interromper = True
     print("Interrupção solicitada pelo usuário. Finalizando...")
 
+global multipro
+global Vpu
+multipro = ('multipro')
+Vpu = ('Vpu@2018')
+
 #função principal/inicial
 def main():
     global MAC
@@ -74,9 +79,9 @@ def RoteadorF():
         return  
     pa.write('192.168.1.1')
     pa.press('enter')
-    pa.write('multipro')
+    pa.write(multipro)
     pa.press('tab')
-    pa.write('multipro')
+    pa.write(multipro)
     pa.press('enter')
     novo()
 
@@ -86,9 +91,9 @@ def RoteadorRua():
         return
     pa.write('192.168.1.1')
     pa.press('enter')
-    pa.write('multipro')
+    pa.write(multipro)
     pa.press('tab')
-    pa.write('Vpu@2018')
+    pa.write(Vpu)
     pa.press('enter')
     gerenciamento()
 
@@ -157,12 +162,12 @@ def logar():
         return
     pa.write('192.168.1.1')
     pa.press('enter')
-    pa.sleep(10)
+    pa.sleep(5)
     pa.press('f11')
     pa.press('f5')
-    pa.write('multipro')
+    pa.write(multipro)
     pa.press('tab')
-    pa.write('Vpu@2018')
+    pa.write(Vpu)
     pa.press('tab')
     pa.press('enter')
     removassistente()
@@ -176,13 +181,14 @@ def removassistente():
 def wlan():
     if interromper:
         return
+    vemprauno = ('@vemprauno')
     pa.press('tab', 3)
     pa.press('enter')
     pa.press('tab', 7, 1)
     pa.press('enter')
     pa.click(x=343, y=333)
     pa.press('tab', 6)
-    pa.write(MACgrande[-6:] + '@vemprauno')
+    pa.write(MACgrande[-6:] + vemprauno)
     pa.press('tab', 11, 0.5)
     pa.press('enter')
     lan()
@@ -202,7 +208,8 @@ def lan():
 
 #usuario e senha do 4g
 def g4():
-    pa.write('VempraUno_' + MACgrande[-4:])
+    vemprauno = ('VempraUno_')
+    pa.write(vemprauno + MACgrande[-4:])
     pa.press('tab', 3)
     pa.write(MACpequeno[-8:])
     pa.press('tab', 4)
@@ -213,8 +220,11 @@ def g4():
 
 def relatorio():
     os.system('cls')
-    print ('o ppoe é: ' + MACgrande[-6:] + '@vemprauno')
-    print ('o usuario é: VempraUno_' + MACgrande[-4:])
+    vemprauno = ('@vemprauno')
+    Vemprauno = ('VempraUno_')
+    print ('o ppoe é: ' + MACgrande[-6:] + vemprauno)
+    
+    print ('o usuario é: '+ Vemprauno + MACgrande[-4:])
     print ('a senha é: ' + MACpequeno[-8:])
     time.sleep (60)
     
